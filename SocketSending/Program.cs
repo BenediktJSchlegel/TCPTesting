@@ -7,6 +7,7 @@ class MainClass
 {
     public static void Main()
     {
+        //IP Adresse anpassen
         IPEndPoint ip = new IPEndPoint(IPAddress.Parse("x.x.x.x"), 6555);
 
         Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
