@@ -24,6 +24,26 @@ namespace TCPReceiverApp
             }
         }
 
+        private string ipText;
+
+        public string IpText
+        {
+            get
+            {
+                if (ipText == String.Empty)
+                    return "IP Unavailable";
+
+                return ipText;
+            
+            }           
+            set
+            { 
+                ipText = value;
+                OnPropertyChanged(nameof(IpText));
+            }
+        }
+
+
         public MainPage()
         {
             InitializeComponent();
@@ -37,8 +57,7 @@ namespace TCPReceiverApp
         {
             try
             {
-                //IP Adresse anpassen
-                TcpListener tcp = new TcpListener(IPAddress.Parse("x.x.x.x"), 6555);
+                TcpListener tcp = new TcpListener(IPAddress.Parse(GetIPAddress()), 6555);
                 tcp.Start();
 
                 Socket socket = null;
@@ -65,6 +84,19 @@ namespace TCPReceiverApp
             {
                 Console.WriteLine(e);
             }
+        }
+
+        public string GetIPAddress()
+        {
+            var IpAddress = Dns.GetHostAddresses(Dns.GetHostName()).FirstOrDefault();
+
+            if (IpAddress != null)
+            {
+                IpText = IpAddress.ToString();
+                return IpAddress.ToString();
+            }
+
+            return String.Empty;
         }
     }
 }
